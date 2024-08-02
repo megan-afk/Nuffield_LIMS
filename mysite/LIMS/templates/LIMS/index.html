@@ -1,0 +1,37 @@
+{% extends "master.html" %}
+{% load static %}
+{% block javascripts %}
+    <script src="{% static 'javascript/index.js' %}"></script>
+{% endblock %}
+{% block content %}
+<h1>Samples</h1>
+<table class="table">
+    <tr>
+        <th>Sample Name</th>
+        <th>Taxon ID</th>
+        <th>Scientific Name</th>
+        <th>Date Collected</th>
+    </tr>
+{%  for sample in samples %}
+    <tr>
+        <td><a href="/LIMS/sample/{{ sample.pk }}">{{ sample.sample_name }}</a></td>
+        <td>{{ sample.taxon_id }}</td>
+        <td>{{ sample.scientific_name }}</td>
+        <td>{{ sample.date_collected }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+
+<div class="container" style="position: relative; top: 50px;">
+    <h2>Sample Form</h2>
+    <form method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+            <button type="submit" style="margin-bottom: 50px;">Submit</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

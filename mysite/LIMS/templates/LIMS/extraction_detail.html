@@ -1,0 +1,57 @@
+{% extends "master.html" %}
+{% block content %}
+<h1>Extraction Detail</h1>
+
+<h2>{{ extraction.extraction_name }}</h2>
+
+<table class="table">
+
+    <tr>
+        <th>Extraction Name</th>
+        <td>{{ extraction.extraction_name }}</td>
+    </tr>
+    <tr>
+        <th>Extraction Method</th>
+        <td>{{ extraction.extraction_method }}</td>
+    </tr>
+    <tr>
+        <th>Date Extracted</th>
+        <td>{{ extraction.extraction_date }}</td>
+    </tr>
+
+</table>
+
+<h3 style="position: relative; top: 20px;">Quality Control</h3>
+<table class="table" style="position: relative; top: 20px;">
+    <tr>
+        <th>Quality Distribution</th>
+        <th>Ambiguous Base Content</th>
+        <th>Pass QC</th>
+    </tr>
+{% for qc in extraction.qc_set.all %}
+    <tr>
+        <td>{{ qc.quality_distribution }}</td>
+        <td>{{ qc.ambiguous_base_content }}</td>
+        <td>{{ qc.passQC }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<h3 style="position: relative; top: 40px;">Sequencing</h3>
+<table class="table" style="position: relative; top: 40px;">
+    <tr>
+        <th>Date Sequenced</th>
+        <th>Sequencing Method</th>
+        <th>Mean Read Length</th>
+        <th>File Name</th>
+    </tr>
+{% for sequence in extraction.sequencing_set.all %}
+    <tr>
+        <td>{{ sequence.sequencing_date }}</td>
+        <td>{{ sequence.sequencing_method }}</td>
+        <td>{{ sequence.mean_read_length }}</td>
+        <td>{{ sequence.file_name }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

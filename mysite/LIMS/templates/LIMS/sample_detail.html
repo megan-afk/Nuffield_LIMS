@@ -1,0 +1,58 @@
+{% extends "master.html" %}
+{% block content %}
+<h1>Sample Detail</h1>
+
+            <div class="col-md-4">
+                    {{ sample.sample.name }}
+                    <img src="{{ sample.Sample_Img.url }}" class="img-responsive" style="width: 150%;"/>
+            </div>
+
+<h2>{{ sample.sample_name }}</h2>
+
+<table class="table">
+
+    <tr>
+        <th>Sample Name</th>
+        <td>{{ sample.sample_name }}</td>
+    </tr>
+    <tr>
+        <th>Scientific Name</th>
+        <td>{{ sample.scientific_name }}</td>
+    </tr>
+    <tr>
+        <th>Date Collected</th>
+        <td>{{ sample.date_collected }}</td>
+    </tr>
+
+</table>
+
+
+<h3 style="position: relative; top: 20px;">Extractions</h3>
+<table class="table" style="position: relative; top: 20px;">
+    <tr>
+        <th>Extraction Name</th>
+        <th>Extraction Method</th>
+        <th>Date Extracted</th>
+    </tr>
+{% for extraction in sample.extraction_set.all %}
+    <tr>
+        <td><a href="/LIMS/extraction/{{ extraction.pk }}">{{ extraction.extraction_name }}</a></td>
+        <td>{{ extraction.extraction_method }}</td>
+        <td>{{ extraction.extraction_date }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<div class="container" style="position: relative; top: 50px;">
+    <h2>Extraction Form</h2>
+    <form method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+            <button type="submit" style="margin-bottom: 50px;">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
